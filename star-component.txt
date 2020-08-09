@@ -1,0 +1,60 @@
+//css
+.crop{
+    overflow: hidden;
+}
+
+div{
+    cursor: pointer;
+}
+
+//html
+<div class="crop"
+    [style.width.px]="starWidth"
+    [title]="rating"
+    (click)="onClick()">
+    <div style="width: 75px;">
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+    </div>
+</div>
+
+
+//ts
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-star',
+  templateUrl: './star-component.component.html',
+  styleUrls: ['./star-component.component.css']
+})
+export class StarComponentComponent implements OnInit {
+
+  @Input() rating: number;
+  starWidth: number;
+  @Output() ratingClicked: EventEmitter<string> =
+    new EventEmitter<string>();
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+
+  //ngOnChangess- se koristi pri promena
+  //na nekoi od @Input() atributite na 
+  //komponentata
+  ngOnChanges() : void{
+    this.starWidth = this.rating * 75 / 5;
+  }
+
+
+  onClick() : void{
+    // console.log('The rating ${this.rating} was clicked');
+    this.ratingClicked.emit('clicked!');
+  }
+
+}
+
